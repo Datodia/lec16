@@ -2,6 +2,7 @@ const { Router } = require("express");
 const usersModel = require("../models/users.model");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const isAuth = require('../middlewares/isAuth.middleware')
 require('dotenv').config()
 
 
@@ -38,6 +39,11 @@ authRouter.post('/sign-in', async (req, res) => {
 
     const token = jwt.sign(payLoad, process.env.JWT_SECRET, {expiresIn: '1h'})
     res.json({token})
+})
+
+authRouter.get('/current-user', isAuth ,async (req, res) => {
+    const user = await usersModel.findById(req.userId).select('-password')
+    res.json(user)
 })
 
 

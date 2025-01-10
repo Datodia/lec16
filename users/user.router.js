@@ -5,7 +5,7 @@ const { isValidObjectId } = require("mongoose");
 const userRouter = Router()
 
 userRouter.get('/', async (req, res) => {
-    const users = await usersModel.find().select('-password')
+    const users = await usersModel.find().populate('posts', 'title content').select('-password')
     res.json(users)
 })
 

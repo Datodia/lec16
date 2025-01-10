@@ -5,8 +5,10 @@ const authRouter = require('./auth/auth.router')
 const postsRouter = require('./posts/posts.router')
 const isAuth = require('./middlewares/isAuth.middleware')
 const app = express()
+const cors = require('cors')
 
 app.use(express.json())
+app.use(cors())
 
 connectToDb()
 
